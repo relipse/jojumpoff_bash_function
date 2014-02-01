@@ -1,16 +1,37 @@
 ####################################################################
-# Jump Off aka jo - a very simple jump to directory script, 
+# Jump Off ( jo ) - a very simple bash function that lets you 
+# 					quickly cd to another directory
+# HOW IT WORKS:
+#   Files are stored in ~/jo/ directory ($HOME/jo more precisely)
 #
-# SETUP: Add this to your .bashrc,
-#      source ~/.bashrc
-#      jo -a foo path/to/foo
-#      jo -a bar path/to/bar/dir
-#      #Files are stored in ~/jo/ directory#
-#
-# USAGE: in bash, type jo foo, to cd to the directory contained in file ~/jo/foo
-# @author relipse, major help from freenode #bash
-# @license Public Domain or MIT, whichever preferred by user
-# @version 1.1.0
+# INSTALL:
+#	1. Add jo function to your .bashrc file (please
+#	    include comments for possible inthefuture auto-upgrade script)
+#   2. Type: source ~/.bashrc or close/reopen prompt
+#   3. mkdir -p ~/jo
+#  
+# USAGE:
+#    ADD/REPLACE JUMP OFF DIRECTORIES
+#      1. You can do it the easy way using jo -a or --add
+#         jo -a foo path/to/foo
+#         jo -a bar path/to/bar/dir
+#      2. Or the other easy way, 
+#		  cd ~/jo 
+#         echo "path/to/foo" > foo
+#      	  echo "path/to/bar/dir" > bar
+#    AND YOU ARE OFF:
+#      1. Type "jo <shortname>" to jump to the directory added!
+#      2. For example:
+#      	$ jo foo   
+#      	path/to/foo
+#      	$ jo bar
+#      	path/to/bar/dir
+#    
+# @author relipse
+# @see #bash on freenode, python go script written by a komodoide developer
+# @license Dual License: Public Domain and The MIT License (MIT) 
+#        (Use either one, whichever you prefer)
+# @version 1.3.0
 ####################################################################
 function jo() { 
 	# Reset all variables that might be set
@@ -18,14 +39,15 @@ function jo() {
 	local list=0
 	local add=0
 	local adddir=0
-
+    local allsubcommands="--list -l, --add -a, --help -h ?"
 	if (( $# == 0 )); then
-	    echo "Try jo --help for more, but here are the existing jos:"
+	    #echo "Try jo --help for more, but here are the existing jos:"
 		ls ~/jo
+		echo "Jo arguments: $allsubcommands"
 	    return 0;
 	fi
-
-
+ 
+ 
 	while :
 	do
 	    case $1 in
@@ -76,7 +98,7 @@ function jo() {
 	            ;;
 	    esac
 	done
-
+ 
     if  [[ $add != 0 ]]; then
         echo "$adddir" > ~/jo/"$add"
         if [ -f ~/jo/"$add" ]; then
@@ -84,16 +106,16 @@ function jo() {
         else
         	echo problem adding $add
         fi
-
+ 
         return 0;
     fi
-
+ 
 	if (( list > 0 )); then
 	    echo "Listing jos:"
 		ls ~/jo
 		return 0
 	fi
-
+ 
 	#check if jump file exists in ~/jo/ directory
 	local file=$HOME/jo/"$1"
 	if [ -f $file ]; then
@@ -101,12 +123,12 @@ function jo() {
     else
     	echo Error: "'$1'" does not exist. Try this to add it:
     	echo jo --add $1 path/to/dir
-
+ 
     	#echo "$file does not exist. Use jo --add $file to add it."
     	return 1
     fi 
-
-
+ 
+ 
 	if [ -d $fullpath ]
 	then
 		cd $fullpath
@@ -114,10 +136,10 @@ function jo() {
 	else
 		echo $file exist, but 
 		echo $fullpath does not exist
-
+ 
 		#echo "To add/replace a jo jump file, type either: "
 		#echo "jo --add <foo> <long-path-to-dir>"
 		#echo "echo '<long-path-to-dir>' > ~/jo/<foo> "
 	fi
 }
-#####
+###############################################################endjo
