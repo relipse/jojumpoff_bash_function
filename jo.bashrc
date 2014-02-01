@@ -1,6 +1,12 @@
 ####################################################################
 # Jump Off aka jo - a very simple jump to directory script, 
-# SETUP: store files in ~/jo/, each containing a path/to/long/dir #
+#
+# SETUP: Add this to your .bashrc,
+#      source ~/.bashrc
+#      jo -a foo path/to/foo
+#      jo -a bar path/to/bar/dir
+#      #Files are stored in ~/jo/ directory#
+#
 # USAGE: in bash, type jo foo, to cd to the directory contained in file ~/jo/foo
 # @author relipse, major help from freenode #bash
 # @license Public Domain or MIT, whichever preferred by user
