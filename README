@@ -1,15 +1,20 @@
-# Jump Off ( jo ) - a very simple bash function that lets you 
-# 					quickly cd to another directory
-# HOW IT WORKS:
-#   Files are stored in ~/jo/ directory ($HOME/jo more precisely)
-#
+Jump Off ( jo ) - a very simple bash function that lets you 
+ 					quickly cd to another directory
 
-
-#---AUTOMATED INSTALL INSTRUCTIONS---#
+Example:
+```
+$ jo -a foo path/to/foo
+$ jo foo
+path/to/foo
+$
+```
+---AUTOMATED INSTALL INSTRUCTIONS---
+```
 #You can use git and php for automated install#
 #cd anywhere
 git clone git@github.com:relipse/jojumpoff_bash_function.git jojumpoff
 php jojumpoff/joinstall.php
 rm -rf jojumpoff
+```
 
 Read jo.bashrc for details.
