@@ -63,6 +63,7 @@ if ($upgrade){
 
 
 //append jo to end of .bashrc
+$newbashrc_contents .= "\n";
 $newbashrc_contents .= file_get_contents($INSTALL['fullpath']);
 
 if ($options['make_backup']){
