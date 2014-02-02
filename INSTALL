@@ -1,4 +1,6 @@
+#---AUTOMATED INSTALL INSTRUCTIONS---#
 #You can use git and php for automated install#
-git clone https://gist.github.com/e9dc3fd55436976360d3.git jojumpoff
+#cd anywhere
+git clone git@github.com:relipse/jojumpoff_bash_function.git jojumpoff
 php jojumpoff/joinstall.php
 rm -rf jojumpoff
