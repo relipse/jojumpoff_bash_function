@@ -1,3 +1,4 @@
+function jo() { 
 ####################################################################
 # Jump Off ( jo ) - a very simple bash function that lets you 
 # 					quickly cd to another directory
@@ -5,6 +6,12 @@
 #   Files are stored in ~/jo/ directory ($HOME/jo more precisely)
 #
 # INSTALL:
+#  AUTOMATED INSTALL
+#   You can use git and php for a simple automated install as below:
+#   $ git clone https://gist.github.com/e9dc3fd55436976360d3.git jojumpoff
+#   $ php jojumpoff/joinstall.php
+#
+#  MANUAL INSTALL
 #	1. Add jo function to your .bashrc file (please
 #	    include comments for possible inthefuture auto-upgrade script)
 #   2. Type: source ~/.bashrc or close/reopen prompt
@@ -31,9 +38,8 @@
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.3.0
+# @version 1.4.0
 ####################################################################
-function jo() { 
 	# Reset all variables that might be set
 	local verbose=0
 	local list=0
