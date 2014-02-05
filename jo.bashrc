@@ -74,7 +74,7 @@ function jo() {
 	            add=$2     # You might want to check if you really got FILE
 	             
 	            #by default add current pwd, if not given
-	            if  [ -z "$3" ]; then
+	            if  [ ! -z "$3" ]; then
 	            	adddir=$3
 	            	shift 1
 	            else
@@ -89,7 +89,7 @@ function jo() {
         	--add=*)
 	            add=${1#*=}        # Delete everything up till "="
 	            #by default add current pwd, if not given
-	            if [ -z "$3" ]; then
+	            if [ ! -z "$3" ]; then
 	            	adddir=$3
 	            	shift 1
 	            else
@@ -120,14 +120,13 @@ function jo() {
 	    esac
 	done
  
-    if  [[ $adddir != 0 ]]; then
+    if  [ ! -z "$adddir" ]; then
         echo "$adddir" > $HOME/jo/"$add"
-        if [ -f $HOME/jo/"$add" ]; then
-        	echo $add - $adddir added, try: jo $add
-        else
-        	echo problem adding $add
-        fi
- 
+        #if [ -f $HOME/jo/"$add" ]; then
+        #	echo $add - $adddir added, try: jo $add
+        #else
+        # 	echo problem adding $add
+        #fi
         return 0;
     fi
  
