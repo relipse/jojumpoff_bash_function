@@ -71,7 +71,12 @@ function jo() {
 				shift
 				;;
     		 -a | --add)
-	            add=$2     # You might want to check if you really got FILE
+    		 	if [[ -n $2 ]]; then
+	              add=$2     # You might want to check if you really got FILE
+	            else
+	            	echo Invalid usage. Correct usage is: jo --add <sn> [<path>]
+	            	return 0
+	            fi
 	             
 	            #by default add current pwd, if not given
 	            if  [[ -n $3 ]]; then
@@ -81,9 +86,9 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            #if [[ -d $adddir ]]; then
-	            #	echo "Warning: directory $adddir does not exist."
-	            #fi
+	            if [[ -d $adddir ]]; then
+	            	echo "Warning: directory $adddir does not exist."
+	            fi
 	            shift 2
 	            ;;
         	--add=*)
@@ -96,9 +101,9 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            #if [[ -d $adddir ]]; then
-	            # 	echo "Warning: directory $adddir does not exist."
-	            #fi
+	            if [[ -d $adddir ]]; then
+	             	echo "Warning: directory $adddir does not exist."
+	            fi
 	            shift 1
             ;;
 	        -v | --verbose)
@@ -122,11 +127,11 @@ function jo() {
  
     if  [[ -n $adddir ]]; then
         echo "$adddir" > $HOME/jo/"$add"
-        #if [ -f $HOME/jo/"$add" ]; then
-        #	echo $add - $adddir added, try: jo $add
-        #else
-        # 	echo problem adding $add
-        #fi
+        if [ -f $HOME/jo/"$add" ]; then
+        	echo $add - $adddir added, try: jo $add
+        else
+         	echo problem adding $add
+        fi
         return 0;
     fi
  
