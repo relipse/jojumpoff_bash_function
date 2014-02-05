@@ -81,9 +81,9 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            if [[ -d $adddir ]]; then
-	            	echo "Warning: directory $adddir does not exist."
-	            fi
+	            #if [[ -d $adddir ]]; then
+	            #	echo "Warning: directory $adddir does not exist."
+	            #fi
 	            shift 2
 	            ;;
         	--add=*)
@@ -96,9 +96,9 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            if [[ -d $adddir ]]; then
-	            	echo "Warning: directory $adddir does not exist."
-	            fi
+	            #if [[ -d $adddir ]]; then
+	            # 	echo "Warning: directory $adddir does not exist."
+	            #fi
 	            shift 1
             ;;
 	        -v | --verbose)
