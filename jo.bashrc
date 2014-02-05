@@ -3,7 +3,7 @@ function jo() {
 # Jump Off ( jo ) - a very simple bash function that lets you 
 # 					quickly cd to another directory
 # HOW IT WORKS:
-#   Files are stored in ~/jo/ directory ($HOME/jo more precisely)
+#   Files are stored in $HOME/jo/ directory ($HOME/jo more precisely)
 #
 # INSTALL:
 #  AUTOMATED INSTALL
@@ -14,8 +14,8 @@ function jo() {
 #  MANUAL INSTALL
 #	1. Add jo function to your .bashrc file (please
 #	    include comments for possible inthefuture auto-upgrade script)
-#   2. Type: source ~/.bashrc or close/reopen prompt
-#   3. mkdir -p ~/jo
+#   2. Type: source $HOME/.bashrc or close/reopen prompt
+#   3. mkdir -p $HOME/jo
 #  
 # USAGE:
 #    ADD/REPLACE JUMP OFF DIRECTORIES
@@ -23,7 +23,7 @@ function jo() {
 #         jo -a foo path/to/foo
 #         jo -a bar path/to/bar/dir
 #      2. Or the other easy way, 
-#		  cd ~/jo 
+#		  cd $HOME/jo 
 #         echo "path/to/foo" > foo
 #      	  echo "path/to/bar/dir" > bar
 #    AND YOU ARE OFF:
@@ -48,7 +48,7 @@ function jo() {
     local allsubcommands="--list -l, --add -a, --help -h ?"
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
-		ls ~/jo
+		ls $HOME/jo
 		#echo "Jo arguments: $allsubcommands"
 	    return 0;
 	fi
@@ -59,11 +59,11 @@ function jo() {
 	    case $1 in
 	        -h | --help | -\?)
 	            #  Call your Help() or usage() function here.
-	            echo "Usage: jo <foo>, where <foo> is a file in ~/jo/ containing the full directory path."
+	            echo "Usage: jo <foo>, where <foo> is a file in $HOME/jo/ containing the full directory path."
 	            echo "Jo Command line arguments:"
-	            echo "    <foo> - cd to dir stored in contents of file ~/jo/<foo> (normal usage) "
-	            echo "    --list -l             -  show jump files, (same as 'ls ~/jo') "
-	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to ~/jo with jump path <path> or current dir if not provided."
+	            echo "    <foo> - cd to dir stored in contents of file $HOME/jo/<foo> (normal usage) "
+	            echo "    --list -l             -  show jump files, (same as 'ls $HOME/jo') "
+	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to $HOME/jo with jump path <path> or current dir if not provided."
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
 	            ;;
 	        -l | --list)
@@ -121,8 +121,8 @@ function jo() {
 	done
  
     if  [[ $add != 0 ]]; then
-        echo "$adddir" > ~/jo/"$add"
-        if [ -f ~/jo/"$add" ]; then
+        echo "$adddir" > $HOME/jo/"$add"
+        if [ -f $HOME/jo/"$add" ]; then
         	echo $add - $adddir added, try: jo $add
         else
         	echo problem adding $add
@@ -133,11 +133,11 @@ function jo() {
  
 	if (( list > 0 )); then
 	    echo "Listing jos:"
-		ls ~/jo
+		ls $HOME/jo
 		return 0
 	fi
  
-	#check if jump file exists in ~/jo/ directory
+	#check if jump file exists in $HOME/jo/ directory
 	local file=$HOME/jo/"$1"
 	if [ -f $file ]; then
 		local fullpath=$(cat $file)
@@ -166,7 +166,7 @@ function jo() {
  
 		#echo "To add/replace a jo jump file, type either: "
 		#echo "jo --add <foo> <long-path-to-dir>"
-		#echo "echo '<long-path-to-dir>' > ~/jo/<foo> "
+		#echo "echo '<long-path-to-dir>' > $HOME/jo/<foo> "
 	fi
 }
 ###############################################################endjo
