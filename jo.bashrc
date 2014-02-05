@@ -74,7 +74,7 @@ function jo() {
     		 	if [[ -n $2 ]]; then
 	              add=$2     # You might want to check if you really got FILE
 	            else
-	            	echo Invalid usage. Correct usage is: jo --add <sn> [<path>]
+	            	echo Invalid usage. Correct usage is: jo --add '<sn> [<path>]'
 	            	return 0
 	            fi
 	             
