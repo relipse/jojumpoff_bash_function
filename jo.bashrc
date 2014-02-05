@@ -125,7 +125,7 @@ function jo() {
 	    esac
 	done
  
-    if  [[ $adddir ]]; then
+    if  (( $adddir != 0 )); then
         echo "$adddir" > $HOME/jo/"$add"
         if [ -f $HOME/jo/"$add" ]; then
         	echo $add - $adddir added, try: jo $add
