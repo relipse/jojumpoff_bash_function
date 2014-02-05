@@ -38,7 +38,7 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.4.0
+# @version 1.5.400
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
@@ -49,7 +49,7 @@ function jo() {
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
 		ls ~/jo
-		echo "Jo arguments: $allsubcommands"
+		#echo "Jo arguments: $allsubcommands"
 	    return 0;
 	fi
  
@@ -63,7 +63,7 @@ function jo() {
 	            echo "Jo Command line arguments:"
 	            echo "    <foo> - cd to dir stored in contents of file ~/jo/<foo> (normal usage) "
 	            echo "    --list -l             -  show jump files, (same as 'ls ~/jo') "
-	            echo "    --add  -a <sn> <path> -  add/replace <sn> shortname to ~/jo with jump path <path>"
+	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to ~/jo with jump path <path> or current dir if not provided."
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
 	            ;;
 	        -l | --list)
@@ -72,19 +72,34 @@ function jo() {
 				;;
     		 -a | --add)
 	            add=$2     # You might want to check if you really got FILE
-	            adddir=$3
-	            if [[ -d $adddir ]]; then
-	            	echo "Warning: directory $adddir does not exist."
+	             
+	            #by default add current PWD, if not given
+	            if [[ $3 ]]; then
+	            	adddir=$3
+	            	shift 1
+	            else
+	            	adddir=$(PWD)
 	            fi
-	            shift 3
-	            ;;
-        	--add=*)
-	            add=${1#*=}        # Delete everything up till "="
-	            adddir=$2
+
 	            if [[ -d $adddir ]]; then
 	            	echo "Warning: directory $adddir does not exist."
 	            fi
 	            shift 2
+	            ;;
+        	--add=*)
+	            add=${1#*=}        # Delete everything up till "="
+	            #by default add current PWD, if not given
+	            if [[ $3 ]]; then
+	            	adddir=$3
+	            	shift 1
+	            else
+	            	adddir=$(PWD)
+	            fi
+
+	            if [[ -d $adddir ]]; then
+	            	echo "Warning: directory $adddir does not exist."
+	            fi
+	            shift 1
             ;;
 	        -v | --verbose)
 	            # Each instance of -v adds 1 to verbosity
@@ -108,7 +123,7 @@ function jo() {
     if  [[ $add != 0 ]]; then
         echo "$adddir" > ~/jo/"$add"
         if [ -f ~/jo/"$add" ]; then
-        	echo $add added, try jo $add
+        	echo $add - $adddir added, try: jo $add
         else
         	echo problem adding $add
         fi
