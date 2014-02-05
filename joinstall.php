@@ -10,8 +10,14 @@ if (!file_exists($INSTALL['fullpath'])){
 
 $homepath = getenv('home');
 if (empty($homepath)){
-    die('You do not have a $HOME path or getenv("home") is incorrect'."\n");
+	if (shell_exec('whoami') === 'root'){
+		$homepath = '/root';
+		echo 'Warning: homepath is /root';
+	}else{
+       die('You do not have a $HOME path or getenv("home") is incorrect'."\n");
+    }
 }
+
 $INSTALL['mkdir'] = $homepath.'/jo/';
 
 

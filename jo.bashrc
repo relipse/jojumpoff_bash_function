@@ -38,7 +38,7 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.5.600
+# @version 1.5.700
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
@@ -73,12 +73,12 @@ function jo() {
     		 -a | --add)
 	            add=$2     # You might want to check if you really got FILE
 	             
-	            #by default add current PWD, if not given
+	            #by default add current pwd, if not given
 	            if [[ $3 ]]; then
 	            	adddir=$3
 	            	shift 1
 	            else
-	            	adddir=$(PWD)
+	            	adddir=$(pwd)
 	            fi
 
 	            if [[ -d $adddir ]]; then
@@ -88,12 +88,12 @@ function jo() {
 	            ;;
         	--add=*)
 	            add=${1#*=}        # Delete everything up till "="
-	            #by default add current PWD, if not given
+	            #by default add current pwd, if not given
 	            if [[ $3 ]]; then
 	            	adddir=$3
 	            	shift 1
 	            else
-	            	adddir=$(PWD)
+	            	adddir=$(pwd)
 	            fi
 
 	            if [[ -d $adddir ]]; then
