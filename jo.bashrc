@@ -38,7 +38,7 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.5.400
+# @version 1.5.600
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
@@ -142,8 +142,14 @@ function jo() {
 	if [ -f $file ]; then
 		local fullpath=$(cat $file)
     else
-    	echo Error: "'$1'" does not exist. Try this to add it:
-    	echo jo --add $1 path/to/dir
+    	echo Error: "'$1'" does not exist.
+    	local possible=$(ls $HOME/jo | grep $1)
+    	if [[ $possible ]]; then
+    		echo Did you mean: $possible
+    	else
+    	   echo 'Type this to add it:'
+    	   echo jo --add $1 path/to/dir
+    	fi
  
     	#echo "$file does not exist. Use jo --add $file to add it."
     	return 1
