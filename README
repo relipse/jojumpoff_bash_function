@@ -14,7 +14,7 @@ $
 #cd anywhere
 git clone git@github.com:relipse/jojumpoff_bash_function.git jojumpoff
 php jojumpoff/joinstall.php
-rm -rf jojumpoff
+source ~/.bashrc
 ```
 
 Read jo.bashrc for details.
