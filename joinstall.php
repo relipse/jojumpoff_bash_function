@@ -10,7 +10,9 @@ if (!file_exists($INSTALL['fullpath'])){
 
 $homepath = getenv('home');
 if (empty($homepath)){
-	if (shell_exec('whoami') === 'root'){
+	$whoami = shell_exec('whoami');
+	echo 'whoami: '.$whoami;
+	if ($whoami == 'root'){
 		$homepath = '/root';
 		echo 'Warning: homepath is /root';
 	}else{
