@@ -1,16 +1,12 @@
 _jo() 
 {
-    local cur prev opts more
+    local cur prev opts lsjofiles
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="--help --add -a --list"
-    more=$(ls ~/jo | tr -d "\n")
-    opts="$opts $more"
+    lsjofiles=$(ls $HOME/jo)
+    opts="--help --add -a --list $lsjofiles"
 
-    if [[ ${cur} == -* ]] ; then
-        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-        return 0
-    fi
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
 }
 complete -F _jo jo
