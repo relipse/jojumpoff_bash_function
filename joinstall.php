@@ -111,6 +111,8 @@ if ($install_autocompletion){
 	 	//good file doesnt exist, first install
 	 	$accontents = file_get_contents(dirname(__FILE__).'/jojumpoff.autocompletion');
 	 	file_put_contents($ac_file, $accontents);
+	 	echo "Reload autocompletion by doing: . $ac_file\n";
+	 	exit(0);
 	 }
 }
 
