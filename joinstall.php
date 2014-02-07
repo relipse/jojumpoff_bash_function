@@ -82,16 +82,19 @@ if ($upgrade){
 }
 
 $uninstall = false;
-if (!empty($argv[1])){ 
-	switch(strtolower($argv[1])){
-		case '--remove':
-	        case '--uninstall':
-	        	$uninstall = true;
-	        break;
-	        case '--autocompletion':
-	        case '--completion':
-	        	$install_autocompletion = true;
-	        break;
+if (!empty($argv[1])){
+	foreach($argv as $i => $arg){
+		switch(strtolower($arg)){
+			case '--remove':
+		        case '--uninstall':
+		        
+		        	$uninstall = true;
+		        break;
+		        case '--autocompletion':
+		        case '--completion':
+		        	$install_autocompletion = true;
+		        break;
+		}
 	}
 }
 
