@@ -16,8 +16,11 @@ if (empty($homepath)){
 		$homepath = '/root';
 		echo 'Warning: homepath is /root';
 	}else{
-       die('You do not have a $HOME path or getenv("home") is incorrect'."\n");
-    }
+		$homepath = '/home/'.$whoami;
+		
+       		echo ('You do not have a $HOME path or getenv("home") is incorrect'."\n");
+       		echo "Warning: homepath set as $homepath\n";
+         }
 }
 
 $INSTALL['mkdir'] = $homepath.'/jo/';
