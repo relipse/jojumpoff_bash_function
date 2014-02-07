@@ -5,7 +5,7 @@ _jo()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="--help --add -a --list"
-    more=$(ls $HOME/jo)
+    more=$(ls ~/jo | tr -d "\n")
     opts="$opts $more"
 
     if [[ ${cur} == -* ]] ; then
