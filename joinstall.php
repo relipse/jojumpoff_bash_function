@@ -11,17 +11,22 @@ if (!file_exists($INSTALL['fullpath'])){
 $homepath = getenv('home');
 if (empty($homepath)){
 	echo "Warning: getenv('home') is not working properly. Using another method...\n";
-	$home = shell_exec('cd ~/ && pwd');
-	echo 'Guessing homepath as '.$home."\n";
+	$cdpwd_homepath = trim(shell_exec('cd ~/ && pwd'));
+	//echo 'Guessing homepath as '.$home."\n";
 	$whoami = trim(shell_exec('whoami'));
 	echo 'whoami: '.$whoami."\n";
 	if ($whoami == 'root'){
 		$homepath = '/root';
+		if ($cdpwd_homepath !== $homepath){
+			die($cdpwd_homepath.' differs from '.$homepath);
+		}
 		echo 'Warning: homepath is /root';
 	}else{
 		$homepath = '/home/'.$whoami;
-		
-       		echo ('You do not have a $HOME path or getenv("home") is incorrect'."\n");
+		if ($cdpwd_homepath !== $homepath){
+			die($cdpwd_homepath.' differs from '.$homepath);
+		}
+       		//echo ('You do not have a $HOME path or getenv("home") is incorrect'."\n");
        		echo "Warning: homepath set as $homepath\n";
          }
 }
