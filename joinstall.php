@@ -14,20 +14,20 @@ if (empty($homepath)){
 	$cdpwd_homepath = trim(shell_exec('cd ~/ && pwd'));
 	//echo 'Guessing homepath as '.$home."\n";
 	$whoami = trim(shell_exec('whoami'));
-	echo 'whoami: '.$whoami."\n";
+	//echo 'whoami: '.$whoami."\n";
 	if ($whoami == 'root'){
 		$homepath = '/root';
 		if ($cdpwd_homepath !== $homepath){
 			die($cdpwd_homepath.' differs from '.$homepath);
 		}
-		echo 'Warning: homepath is /root';
+		echo "homepath set as $homepath\n";
 	}else{
 		$homepath = '/home/'.$whoami;
 		if ($cdpwd_homepath !== $homepath){
 			die($cdpwd_homepath.' differs from '.$homepath);
 		}
        		//echo ('You do not have a $HOME path or getenv("home") is incorrect'."\n");
-       		echo "Warning: homepath set as $homepath\n";
+       		echo "homepath set as $homepath\n";
          }
 }
 
