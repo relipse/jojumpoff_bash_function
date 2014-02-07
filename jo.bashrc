@@ -38,7 +38,7 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.5.900
+# @version 1.6
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
@@ -125,7 +125,7 @@ function jo() {
 	    esac
 	done
  
-    if  (( $adddir != 0 )); then
+    if  [[ "$adddir" ]]; then
         echo "$adddir" > $HOME/jo/"$add"
         if [ -f $HOME/jo/"$add" ]; then
         	echo $add - $adddir added, try: jo $add
