@@ -167,7 +167,7 @@ function jo() {
  
 	if [ -d $fullpath ]
 	then
-		echo jumping off >>
+		echo "jumping off >>"
 		cd $fullpath
 		pwd
 	else
