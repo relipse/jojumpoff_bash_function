@@ -1,6 +1,4 @@
-Jump Off ( jo ) - a very simple bash function that lets you 
- 					quickly cd to another directory
-                        (does not use symlinks)
+Jump Off ( jo ) - a very simple bash function that lets you quickly cd to another directory (does not use symlinks)
 Example:
 $ jo --add foo path/to/foo
 $ jo foo
