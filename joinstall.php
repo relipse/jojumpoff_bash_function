@@ -96,7 +96,7 @@ if (!empty($argv[1])){
 
 
 if ($install_autocompletion){
-	 $ac_file = '/etc/bash_completion.d/jojumpoff'
+	 $ac_file = '/etc/bash_completion.d/jojumpoff';
 	 if (file_exists($ac_file)){
 	 	echo 'Error: First remove '.$ac_file.' manually'."\n";
 	 }else{
