@@ -1,0 +1,16 @@
+_jo() 
+{
+    local cur prev opts more
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="--help --add -a --list"
+    more=$(ls $HOME/jo)
+    opts="$opts $more"
+
+    if [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
+}
+complete -F _jo jo
