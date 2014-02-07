@@ -1,20 +1,24 @@
 Jump Off ( jo ) - a very simple bash function that lets you 
  					quickly cd to another directory
-
+                        (does not use symlinks)
 Example:
-```
-$ jo -a foo path/to/foo
+$ jo --add foo path/to/foo
 $ jo foo
+jumping to >>
 path/to/foo
 $
-```
 ---AUTOMATED INSTALL INSTRUCTIONS---
-```
 #You can use git and php for automated install#
 #cd anywhere
 git clone https://github.com/relipse/jojumpoff_bash_function.git jojumpoff
 php jojumpoff/joinstall.php
 source ~/.bashrc
-```
+#now install auto completion when you type $ jo it will autocomplete
+php jojumpoff/joinstall.php --completion
 
+--REMOVAL INSTRUCTIONS--
+php jojumpoff/joinstall.php --uninstall
+php jojumpoff/joinstall.php --uninstall --completion
+
+--MORE DETAILS SEE SOURCE --
 Read jo.bashrc for details.
