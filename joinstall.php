@@ -7,6 +7,7 @@ $options = array('make_backup'=>true);
 if (!file_exists($INSTALL['fullpath'])){
 	die($INSTALL['basename'].' does not exist, cannot install nothing.'."\n");
 }
+$install_autocompletion = false;
 
 $homepath = getenv('home');
 if (empty($homepath)){
