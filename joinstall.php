@@ -98,7 +98,11 @@ if (!empty($argv[1])){
 if ($install_autocompletion){
 	 $ac_file = '/etc/bash_completion.d/jojumpoff';
 	 if (file_exists($ac_file)){
-	 	echo 'Error: First remove '.$ac_file.' manually'."\n";
+	 	if ($uninstall){
+	 		unlink($ac_file);
+	 	}else{
+	 	   echo 'Error: First remove '.$ac_file.' either by php joinstall.php --uninstall --completion or using rm manually'."\n";
+	 	}
 	 }else{
 	 	//good file doesnt exist, first install
 	 	$accontents = file_get_contents(dirname(__FILE__).'/jojumpoff.autocompletion');
@@ -116,8 +120,6 @@ if ($options['make_backup']){
 	copy($bashrc_fullpath, $bashrc_fullpath.'.backup-'.date('Y-m-d_His'));
 }
 
-
- /etc/bash_completion.d/
 
 if (file_put_contents($bashrc_fullpath, $newbashrc_contents)){
 	if ($uninstall){
