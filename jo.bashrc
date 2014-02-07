@@ -44,7 +44,7 @@ function jo() {
 	local verbose=0
 	local list=0
 	local add=0
-	local adddir=0
+	local adddir=""
     local allsubcommands="--list -l, --add -a, --help -h ?"
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
