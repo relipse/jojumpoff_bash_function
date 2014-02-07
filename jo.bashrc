@@ -38,7 +38,7 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.5.800
+# @version 1.5.900
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
@@ -137,7 +137,12 @@ function jo() {
  
 	if (( list > 0 )); then
 	    echo "Listing jos:"
-		ls $HOME/jo
+		local lsjos=$(ls $HOME/jo)
+		if [[ "$lsjos" ]]; then
+		
+		else
+			echo There are not yet any jos. try for example: jo --add foo path/to/bar
+		fi
 		return 0
 	fi
  
@@ -162,6 +167,7 @@ function jo() {
  
 	if [ -d $fullpath ]
 	then
+		echo jumping off >>
 		cd $fullpath
 		pwd
 	else
