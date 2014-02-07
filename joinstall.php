@@ -10,7 +10,7 @@ if (!file_exists($INSTALL['fullpath'])){
 
 $homepath = getenv('home');
 if (empty($homepath)){
-	echo "getenv('home') is not working properly."
+	echo "Warning: getenv('home') is not working properly. Using another method...\n";
 	$home = shell_exec('cd ~/ && pwd');
 	echo 'Guessing homepath as '.$home."\n";
 	$whoami = trim(shell_exec('whoami'));
