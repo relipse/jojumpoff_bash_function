@@ -139,9 +139,9 @@ function jo() {
 	    echo "Listing jos:"
 		local lsjos=$(ls $HOME/jo)
 		if [[ "$lsjos" ]]; then
-		
+		   echo $lsjos
 		else
-			echo There are not yet any jos. try for example: jo --add foo path/to/bar
+		   echo There are not yet any jos. try for example: jo --add foo path/to/bar
 		fi
 		return 0
 	fi
