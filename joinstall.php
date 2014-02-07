@@ -75,16 +75,30 @@ if ($upgrade){
 	$newbashrc_contents = $bashrc_contents;
 }
 
+$uninstall = false;
+if (!empty($argv[1])){ 
+	switch(strtolower($argv[1])){
+		case '--remove':
+	        case '--uninstall':
+	        	$uninstall = true;
+	}
+}
 
-//append jo to end of .bashrc
-$newbashrc_contents .= "\n";
-$newbashrc_contents .= file_get_contents($INSTALL['fullpath']);
+if (!$uninstall){
+  //append jo to end of .bashrc
+  $newbashrc_contents .= "\n";
+  $newbashrc_contents .= file_get_contents($INSTALL['fullpath']);
+}
 
 if ($options['make_backup']){
 	copy($bashrc_fullpath, $bashrc_fullpath.'.backup-'.date('Y-m-d_His'));
 }
 
 if (file_put_contents($bashrc_fullpath, $newbashrc_contents)){
+	if ($uninstall){
+		echo 'Uninstall complete. Check ~/.bashrc for proof!'."\n";
+		exit(0);
+	}
 	$cmd = "source ".escapeshellarg($bashrc_fullpath);
 	echo "New .bashrc file, install almost complete. Remember to do: \n";
 	echo $cmd."\n";
