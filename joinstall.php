@@ -10,8 +10,11 @@ if (!file_exists($INSTALL['fullpath'])){
 
 $homepath = getenv('home');
 if (empty($homepath)){
+	echo "getenv('home') is not working properly."
+	$home = shell_exec('cd ~/ && pwd');
+	echo 'Guessing homepath as '.$home."\n";
 	$whoami = trim(shell_exec('whoami'));
-	echo 'whoami: '.$whoami;
+	echo 'whoami: '.$whoami."\n";
 	if ($whoami == 'root'){
 		$homepath = '/root';
 		echo 'Warning: homepath is /root';
