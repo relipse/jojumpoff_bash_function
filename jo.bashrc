@@ -1,3 +1,4 @@
+
 function jo() { 
 ####################################################################
 # Jump Off ( jo ) - a very simple bash function that lets you 
@@ -38,14 +39,15 @@ function jo() {
 # @see #bash on freenode, python go script written by a komodoide developer
 # @license Dual License: Public Domain and The MIT License (MIT) 
 #        (Use either one, whichever you prefer)
-# @version 1.6.100
+# @version 1.6.200
 ####################################################################
 	# Reset all variables that might be set
 	local verbose=0
 	local list=0
+	local rem=""
 	local add=0
 	local adddir=""
-    local allsubcommands="--list -l, --add -a, --help -h ?"
+    local allsubcommands="--list -l, --add -a, --help -h ?, -r -rm"
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
 		ls $HOME/jo
@@ -64,12 +66,22 @@ function jo() {
 	            echo "    <foo> - cd to dir stored in contents of file $HOME/jo/<foo> (normal usage) "
 	            echo "    --list -l             -  show jump files, (same as 'ls $HOME/jo') "
 	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to $HOME/jo with jump path <path> or current dir if not provided."
+	            echo "    --rem -r <sn>           - remove/delete short link."
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
 	            ;;
 	        -l | --list)
-				list=$((list+1))
-				shift
+				echo $(ls $HOME/jo)
+				return 0
 				;;
+			 -r | -rm | --rm)
+				 if [[ -n $2 ]]; then
+				 	rem=$2
+				 else
+				 	echo Invalid usage. Correct usage is: jo --rem '<sn>'
+				 	return 0
+				 fi
+				 shift 1
+				 ;;
     		 -a | --add)
     		 	if [[ -n $2 ]]; then
 	              add=$2     # You might want to check if you really got FILE
@@ -86,7 +98,7 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            if [[ -d $adddir ]]; then
+	            if [ ! -d $adddir ]; then
 	            	echo "Warning: directory $adddir does not exist."
 	            fi
 	            shift 2
@@ -101,7 +113,7 @@ function jo() {
 	            	adddir=$(pwd)
 	            fi
 
-	            if [[ -d $adddir ]]; then
+	            if [ ! -d $adddir ]; then
 	             	echo "Warning: directory $adddir does not exist."
 	            fi
 	            shift 1
@@ -125,6 +137,20 @@ function jo() {
 	    esac
 	done
  
+    if [[ "$rem" ]]; then
+        if [ -f $HOME/jo/"$rem" ]; then
+        	echo "Removing $rem -> $(cat $HOME/jo/$rem)"
+        	rm $HOME/jo/"$rem"
+        else
+         	echo "$rem does not exist"
+         	local possible=$(ls $HOME/jo | grep $rem)
+	    	if [[ $possible ]]; then
+	    		echo Did you mean: $possible
+	    	fi
+        fi  
+        return 0; 
+    fi
+
     if  [[ "$adddir" ]]; then
         echo "$adddir" > $HOME/jo/"$add"
         if [ -f $HOME/jo/"$add" ]; then
@@ -167,12 +193,9 @@ function jo() {
  
 	if [ -d $fullpath ]
 	then
-		echo "jumping off >>"
 		cd $fullpath
-		pwd
 	else
-		echo $file exist, but 
-		echo $fullpath does not exist
+		echo $file exist, but $fullpath does not exist. Staying in same directory
  
 		#echo "To add/replace a jo jump file, type either: "
 		#echo "jo --add <foo> <long-path-to-dir>"
