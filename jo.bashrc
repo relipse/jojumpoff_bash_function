@@ -191,9 +191,9 @@ function jo() {
     fi 
  
  
-	if [ -d $fullpath ]
+	if [ -d "$fullpath" ]
 	then
-		cd $fullpath
+		cd "$fullpath"
 	else
 		echo $file exist, but $fullpath does not exist. Staying in same directory
  
