@@ -47,7 +47,7 @@ function jo() {
 	local rem=""
 	local add=0
 	local adddir=""
-    local allsubcommands="--list -l, --add -a, --help -h ?, -r -rm"
+    local allsubcommands="--list -l, --add -a, --help -h ?, -r -rm, -p --mkp"
 	local mkdirp=""
 	local mkdircount=0
 
@@ -66,10 +66,11 @@ function jo() {
 	            #  Call your Help() or usage() function here.
 	            echo "Usage: jo <foo>, where <foo> is a file in $HOME/jo/ containing the full directory path."
 	            echo "Jo Command line arguments:"
-	            echo "    <foo> - cd to dir stored in contents of file $HOME/jo/<foo> (normal usage) "
+	            echo "    <foo> or <foo>/more/path - cd to dir stored in contents of file $HOME/jo/<foo> (normal usage) "
 	            echo "    --list -l             -  show jump files, (same as 'ls $HOME/jo') "
 	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to $HOME/jo with jump path <path> or current dir if not provided."
 	            echo "    --rem -r <sn>           - remove/delete short link."
+	            echo "    --mkp -p <sn>/path/to/more - jump to directory but auto-create it if it doesnt exist"
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
 	            ;;
 	        -p | --mkp)
