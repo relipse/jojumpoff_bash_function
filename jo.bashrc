@@ -48,11 +48,14 @@ function jo() {
 	local add=0
 	local adddir=""
     local allsubcommands="--list -l, --add -a, --help -h ?, -r -rm"
+	local mkdirp=""
+	local mkdircount=0
+
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
 		ls $HOME/jo
 		#echo "Jo arguments: $allsubcommands"
-	    return 0;
+	    return 0
 	fi
  
  
@@ -69,6 +72,12 @@ function jo() {
 	            echo "    --rem -r <sn>           - remove/delete short link."
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
 	            ;;
+	        -p | --mkp)
+				mkdirp=1
+				mkdircount=0
+				echo "Jo will force-create directories..."
+				shift
+				;;
 	        -l | --list)
 				echo $(ls $HOME/jo)
 				return 0
@@ -174,9 +183,72 @@ function jo() {
  
 	#check if jump file exists in $HOME/jo/ directory
 	local file=$HOME/jo/"$1"
-	if [ -f $file ]; then
+	if [ -f "$file" ]; then
 		local fullpath=$(cat $file)
     else
+    	local fullpath=""
+    	# item contains / so attempting to cd and split
+    	if [[ $1 == *"/"* ]]
+    	then
+    	   
+    	    oIFS="$IFS"
+    		IFS="/" read -ra SEGS <<< "$1"
+	    	for i in "${SEGS[@]}" 
+	    	do 
+				    if [ -z "$fullpath" ]
+				    then
+						    if [ -f "$HOME/jo/$i" ]
+						    then
+						    	fullpath=$(cat $HOME/jo/$i)
+						    	cd "$fullpath"
+						    else
+						    	break
+						    fi
+					else
+						if [ -d "$(pwd)/$i" ]
+						then
+						   cd "$i"
+						else
+						   if [ $verbose -ge 1 ]
+						   then
+						   		echo $(pwd)/$i does not exist.
+						   fi
+
+						   if [[ "$mkdirp" ]]
+						   then
+						   		if [ $verbose -ge 1 ]
+						   		then
+						   		   echo "Creating and entering $i..."
+						   		fi
+						   		mkdir $i
+						   		mkdircount=$((mkdircount+1))
+						   		cd "$i"
+							else
+								echo "Use -p or --mkp to automagically create the directory next time."
+								break
+							fi
+						fi
+				    fi
+				 done
+				 IFS="$oIFS"
+		fi
+
+		if [ ! -z "$fullpath" ]
+		then
+			#jumped already to location
+			if [[ "$mkdirp" ]]
+			then
+				if [ $mkdircount -eq 1 ]
+				then
+					echo "Created 1 directory."
+				else
+					echo "Created $mkdircount directories."
+				fi
+			fi
+
+			return 1
+		fi
+
     	if [ -d "$1" ]
     	then
     		echo "$1 is a valid directory. Jumping off..."
