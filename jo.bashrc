@@ -177,14 +177,20 @@ function jo() {
 	if [ -f $file ]; then
 		local fullpath=$(cat $file)
     else
-    	echo Error: "'$1'" does not exist.
-    	local possible=$(ls $HOME/jo | grep $1)
-    	if [[ $possible ]]; then
-    		echo Did you mean: $possible
+    	if [ -d "$1" ]
+    	then
+    		echo "$1 is a valid directory. Jumping off..."
+    		cd "$1"
     	else
-    	   echo 'Type this to add it:'
-    	   echo jo --add $1 path/to/dir
-    	fi
+	    	echo Error: "'$1'" does not exist.
+	    	local possible=$(ls $HOME/jo | grep $1)
+	    	if [[ $possible ]]; then
+	    		echo Did you mean: $possible
+	    	else
+	    	   echo 'Type this to add it:'
+	    	   echo jo --add $1 path/to/dir
+	    	fi
+	    fi
  
     	#echo "$file does not exist. Use jo --add $file to add it."
     	return 1
