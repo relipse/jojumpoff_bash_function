@@ -4,13 +4,23 @@ $ jo --add foo path/to/foo
 $ jo foo
 jumping to >>
 path/to/foo
-$
+$ jo foo/bar  # jumps to path/to/foo/bar
+
 ---AUTOMATED INSTALL INSTRUCTIONS---
 #You can use git and php for automated install#
 #cd anywhere
 git clone https://github.com/relipse/jojumpoff_bash_function.git jojumpoff
 php jojumpoff/joinstall.php
 source ~/.bashrc
+
+---Include AutoCompletion---
+On Windows (or linux) git bash, you need to do something like this in your ~/.bashrc file:
+if [ -f ~/jojumpoff_bash_function/jojumpoff.autocompletion ]; then
+  .  ~/jojumpoff_bash_function/jojumpoff.autocompletion
+fi
+
+
+Alternatively, you may use the installer if you are on linux
 #now install auto completion when you type $ jo it will autocomplete
 php jojumpoff/joinstall.php --completion
 
