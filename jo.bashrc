@@ -9,7 +9,7 @@ function jo() {
 # INSTALL:
 #  AUTOMATED INSTALL
 #   You can use git and php for a simple automated install as below:
-#   $ git clone https://gist.github.com/e9dc3fd55436976360d3.git jojumpoff
+#   $ git clone https://github.com/relipse/jojumpoff_bash_function.git jojumpoff
 #   $ php jojumpoff/joinstall.php
 #
 #  MANUAL INSTALL
@@ -50,6 +50,7 @@ function jo() {
     local allsubcommands="--list -l, --add -a, --help -h ?, -r -rm, -p --mkp"
 	local mkdirp=""
 	local mkdircount=0
+	local printpath=0
 
 	if (( $# == 0 )); then
 	    #echo "Try jo --help for more, but here are the existing jos:"
@@ -67,11 +68,16 @@ function jo() {
 	            echo "Usage: jo <foo>, where <foo> is a file in $HOME/jo/ containing the full directory path."
 	            echo "Jo Command line arguments:"
 	            echo "    <foo> or <foo>/more/path - cd to dir stored in contents of file $HOME/jo/<foo> (normal usage) "
-	            echo "    --list -l             -  show jump files, (same as 'ls $HOME/jo') "
-	            echo "    --add  -a <sn> [<path>] -  add/replace <sn> shortname to $HOME/jo with jump path <path> or current dir if not provided."
-	            echo "    --rem -r <sn>           - remove/delete short link."
-	            echo "    --mkp -p <sn>/path/to/more - jump to directory but auto-create it if it doesnt exist"
+	            echo "    --show|-s <foo>        - echo jump to path"
+	            echo "    --list|-l              - show jump files, (same as 'ls $HOME/jo') "
+	            echo "    --add|-a <sn> [<path>] - add/replace <sn> shortname to $HOME/jo with jump path <path> or current dir if not provided."
+	            echo "    --rm|-r <sn>           - remove/delete short link."
+	            echo "    --mkp|-p <sn>/path/to/more - jump to directory but auto-create it if it doesnt exist"
 	            return 0      # This is not an error, User asked help. Don't do "exit 1"
+	            ;;
+	        -s | --show)
+	            printpath=1
+	            shift
 	            ;;
 	        -p | --mkp)
 				mkdirp=1
@@ -87,7 +93,7 @@ function jo() {
 				 if [[ -n $2 ]]; then
 				 	rem=$2
 				 else
-				 	echo Invalid usage. Correct usage is: jo --rem '<sn>'
+				 	echo Invalid usage. Correct usage is: jo --rm '<sn>'
 				 	return 0
 				 fi
 				 shift 1
@@ -186,6 +192,11 @@ function jo() {
 	local file=$HOME/jo/"$1"
 	if [ -f "$file" ]; then
 		local fullpath=$(cat $file)
+		if [[ "$printpath" -eq 1 ]];
+		then
+		    printf "%s" $fullpath
+		    return 0
+		fi
     else
     	local fullpath=""
     	# item contains / so attempting to cd and split
@@ -253,7 +264,7 @@ function jo() {
     	if [ -d "$1" ]
     	then
     		echo "$1 is a valid directory. Jumping off..."
-    		cd "$1"
+            cd "$1"
     	else
 	    	echo Error: "'$1'" does not exist.
 	    	local possible=$(ls $HOME/jo | grep $1)
@@ -272,7 +283,7 @@ function jo() {
  
 	if [ -d "$fullpath" ]
 	then
-		cd "$fullpath"
+        cd "$fullpath"
 	else
 		echo $file exist, but $fullpath does not exist. Staying in same directory
  

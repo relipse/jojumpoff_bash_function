@@ -25,7 +25,10 @@ if (empty($homepath)){
 	}else{
 		$homepath = '/home/'.$whoami;
 		if ($cdpwd_homepath !== $homepath){
-			die($cdpwd_homepath.' differs from '.$homepath);
+            $homepath = "/Users/$whoami";
+            if ($cdpwd_homepath !== $homepath) {
+                die($cdpwd_homepath . ' differs from ' . $homepath);
+            }
 		}
        		//echo ('You do not have a $HOME path or getenv("home") is incorrect'."\n");
        		echo "homepath set as $homepath\n";
@@ -120,6 +123,7 @@ if (!$uninstall){
   //append jo to end of .bashrc
   $newbashrc_contents .= "\n";
   $newbashrc_contents .= file_get_contents($INSTALL['fullpath']);
+  echo "New jo source appended to end of .bashrc\n";
 }
 
 if ($options['make_backup']){
@@ -133,8 +137,9 @@ if (file_put_contents($bashrc_fullpath, $newbashrc_contents)){
 		exit(0);
 	}
 	$cmd = "source ".escapeshellarg($bashrc_fullpath);
-	echo "New .bashrc file, install almost complete. Remember to do: \n";
+	echo "New .bashrc file, install almost complete.\nRemember to do one of these: \n";
 	echo $cmd."\n";
+    echo "source ~/.bashrc\n";
 	exit(0);
 }else{
 	echo "Error writing to .bashrc file";
