@@ -1,4 +1,11 @@
-
+#############################################################startjo
+myjocompletion () {
+        local f;
+        for f in ~/ru/"$2"*;
+        do [[ -f $f ]] && COMPREPLY+=( "${f##*/}" );
+        done
+}
+complete -F myjocompletion jo
 function jo() { 
 ####################################################################
 # Jump Off ( jo ) - a very simple bash function that lets you 
