@@ -1,7 +1,7 @@
 #############################################################startjo
 myjocompletion () {
         local f;
-        for f in ~/ru/"$2"*;
+        for f in ~/jo/"$2"*;
         do [[ -f $f ]] && COMPREPLY+=( "${f##*/}" );
         done
 }
